@@ -61,3 +61,42 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem(key, value);
     }
 });
+// Add these lines at the end of the document.addEventListener block
+
+document.getElementById('sortFamiliarity').addEventListener('click', function() {
+    sortTable('familiarity');
+});
+
+document.getElementById('sortInterest').addEventListener('click', function() {
+    sortTable('interest');
+});
+
+function sortTable(criteria) {
+    let rows, switching, i, x, y, shouldSwitch;
+    switching = true;
+    // Make a loop that will continue until no switching has been done
+    while (switching) {
+        // Start by saying: no switching is done
+        switching = false;
+        rows = tableBody.rows;
+        // Loop through all table rows (except the first, which contains table headers)
+        for (i = 0; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching
+            shouldSwitch = false;
+            // Get the two elements you want to compare, one from current row and one from the next
+            x = rows[i].getElementsByTagName("SELECT")[criteria === 'familiarity' ? 0 : 1];
+            y = rows[i + 1].getElementsByTagName("SELECT")[criteria === 'familiarity' ? 0 : 1];
+            // Check if the two rows should switch place, based on the direction, asc or desc
+            if (x.value.toLowerCase() > y.value.toLowerCase()) {
+                // If yes, mark as a switch and break the loop
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            // If a switch has been marked, make the switch and mark that a switch has been done
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
+    }
+}
