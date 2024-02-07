@@ -1,41 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Configuration for TableFilter
     var tfConfig = {
         base_path: 'https://unpkg.com/tablefilter@latest/dist/tablefilter/',
-        col_0: 'select', // Dropdown filter for the first column
-        col_1: 'select', // Dropdown filter for the second column
-        col_2: 'none',   // No filter for the description
-        col_3: 'select', // Dropdown filter for the integration
-        col_4: 'select', // Dropdown filter for familiarity
-        col_5: 'select', // Dropdown filter for interest
-        extensions: [{ name: 'sort' }] // Enable sorting extension
+        col_0: 'select',
+        col_1: 'select',
+        col_2: 'none',
+        col_3: 'select',
+        col_4: 'none', // Treat familiarity and interest differently due to custom handling
+        col_5: 'none',
+        extensions: [{ name: 'sort' }]
     };
 
-    // Initialize TableFilter on your table
     var tf = new TableFilter('toolsTable', tfConfig);
     tf.init();
 
-     // Add event listeners for saving selections
+    // Add event listeners for dropdowns in 'Familiarity' and 'Interest' columns
     document.querySelectorAll('.rating-dropdown').forEach(function(select) {
-        select.addEventListener('change', function() {
-            const key = select.parentElement.parentElement.firstElementChild.textContent + '_' + select.name;
-            localStorage.setItem(key, select.value);
-
-            // Update the visible selection to match the dropdown (if using a display approach)
-            updateVisibleSelection(select);
-        });
-
+        const identifier = select.dataset.identifier; // Use data-identifier for unique identification
         // Load saved selections
-        const savedValue = localStorage.getItem(select.parentElement.parentElement.firstElementChild.textContent + '_' + select.name);
+        const savedValue = localStorage.getItem(identifier);
         if (savedValue) {
             select.value = savedValue;
-            updateVisibleSelection(select);
         }
+
+        select.addEventListener('change', function() {
+            localStorage.setItem(identifier, select.value);
+        });
     });
-
-    function updateVisibleSelection(select) {
-        // Implementation depends on how you choose to display the selection
-    }
-});
-
 });
