@@ -14,4 +14,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize TableFilter on your table
     var tf = new TableFilter('toolsTable', tfConfig);
     tf.init();
+
+     // Add event listeners for saving selections
+    document.querySelectorAll('.rating-dropdown').forEach(function(select) {
+        select.addEventListener('change', function() {
+            const key = select.parentElement.parentElement.firstElementChild.textContent + '_' + select.name;
+            localStorage.setItem(key, select.value);
+
+            // Update the visible selection to match the dropdown (if using a display approach)
+            updateVisibleSelection(select);
+        });
+
+        // Load saved selections
+        const savedValue = localStorage.getItem(select.parentElement.parentElement.firstElementChild.textContent + '_' + select.name);
+        if (savedValue) {
+            select.value = savedValue;
+            updateVisibleSelection(select);
+        }
+    });
+
+    function updateVisibleSelection(select) {
+        // Implementation depends on how you choose to display the selection
+    }
+});
+
 });
