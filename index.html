@@ -3,25 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Educational Tools Rating</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        .rating-dropdown {
-            padding: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/tablefilter@latest/dist/tablefilter/style/tablefilter.css">
 </head>
 <body>
     <h2>Educational Tools Rating</h2>
-    <button id="sortFamiliarity">Sort by Familiarity</button>
-    <button id="sortInterest">Sort by Interest</button>
-    <table>
+    <table id="toolsTable">
         <thead>
             <tr>
                 <th>Name/Link</th>
@@ -32,11 +18,12 @@
                 <th>Interest</th>
             </tr>
         </thead>
-        <tbody id="toolsTable">
-            <!-- Rows will be inserted here by JavaScript -->
+        <tbody>
+            <!-- Table rows go here -->
         </tbody>
     </table>
 
+    <script src="https://unpkg.com/tablefilter@latest/dist/tablefilter/tablefilter.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
